@@ -1,0 +1,87 @@
+(require 2htdp/image)
+
+;; Warm Up ----------------------------------------
+;; 1)
+(define-struct customer (fname lname age zipCode))
+(define John (make-customer "John" "Doe" 20 01776))
+(define A (make-customer "A" "B" 12 23466))
+
+;; Data definition
+;;    - fname is the first name of the customer
+;;    - lname is the last name of the customer
+;;    - age is the age of the customer
+;;    - zipCode is the zip code for the customer
+
+;; template
+#;
+(define fn-for-customer
+  (...
+   (customer-fname c)
+   (customer-lname c)
+   (customer-age c)
+   (customer-zipCode c)
+   )
+  )
+
+;; 2)
+;; Customer -> Customer
+;; Take in a customer's age and increase the age by 1
+;; (define (birthday b) 0) ; stub
+(check-expect (birthday A) (make-customer "A" "B" 13 23466))
+(check-expect (birthday John) (make-customer "John" "Doe" 21 01776))
+;; template
+#;
+(define (birthday b)
+  (... b))
+;; code body
+(define (birthday customer)
+  (make-customer (customer-fname customer) (customer-lname customer) (+ (customer-age customer) 1) (customer-zipCode customer))
+  )
+
+;; 3)
+;; Customer Natural -> Customer
+;; Takes a new zip code and a customer and return a new structure with updated zip code
+;; (define (move A 12345) )
+(check-expect (move A 12345) (make-customer "A" "B" 12 12345))
+(check-expect (move John 56789) (make-customer "John" "Doe" 20 56789))
+;; template
+#;
+(define (move customer zc)
+  (... customer zc)
+  )
+;; code body
+(define (move customer zc)
+  (make-customer (customer-fname customer) (customer-lname customer) (customer-age customer) zc)
+  )
+
+;; List of Simple Images ---------------------------------------------------------------------------
+
+;; 1)
+;; Data definition
+;; ListOfsimple-img is one of:
+;;    - empty
+;;    - (cons SimpleImg ListOfsimple-img)
+;; interp. a list of simple images.
+
+;;template
+#;
+(define (fn-for-losi losi shape)
+  (cond
+    [(empty? losi) (...)]
+    [else
+     (... (first losi)
+          (fn-for-losi(rest losi)))]
+    )
+  )
+(check-expect (find-shape (list SI SI1 SI2 SI3) "circle")
+              (list . .))
+
+;; 2)
+(define (find-shape losi shape)
+  (cond
+    [(empty? losi) empty]
+    [else
+     ( (first losi)
+       (fn-for-losi(rest losi)))]
+    )
+  )
